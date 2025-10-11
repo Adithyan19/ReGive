@@ -1,12 +1,16 @@
+// components/Header.jsx
 import { useAuth } from '../../hooks/useAuth.jsx';
 import { useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import 'flowbite';
 import headerimg from '../../assets/react.svg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 function Header() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (window.initFlowbite) {
@@ -18,37 +22,52 @@ function Header() {
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
   };
 
-  if (loading) return null;
+  const handleDonationClick = (e) => {
+    e.preventDefault();
+    if (loading) return;
+    if (!isAuthenticated) {
+      // Store the intended destination
+      localStorage.setItem('intendedRoute', '/donation');
+      handleGoogleLogin();
+    } else {
+      navigate('/donation');
+    }
+  };
 
   return (
     <nav className="bg-header text-foreground shadow-md fixed top-0 left-0 right-0 z-40">
       <div className="w-full p-4 relative">
         <div className="flex items-center justify-between">
-          <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={headerimg} className="h-8" alt="Regive Logo" />
             <span className="self-center text-2xl font-semibold">Regive</span>
-          </a>
+          </Link>
 
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
             <ul className="flex space-x-8 font-medium">
               <li>
-                <a href="#" className="text-button font-semibold hover:text-foreground transition">
+                <Link to="/" className="text-button font-semibold hover:text-foreground transition">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-foreground hover:text-button transition">
+                <Link
+                  to="/donation"
+                  onClick={handleDonationClick}
+                  className="text-foreground hover:text-button transition"
+                >
                   Donate
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-foreground hover:text-button transition">
+                <Link to="/catalog" className="text-foreground hover:text-button transition">
                   Catalog
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -104,7 +123,11 @@ function Header() {
               />
             </div>
 
-            {user ? (
+            {loading ? (
+              <div className="flex items-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              </div>
+            ) : user ? (
               <>
                 <button
                   type="button"
@@ -138,12 +161,12 @@ function Header() {
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="/user-profile"
                         className="block px-4 py-2 text-sm text-foreground hover:bg-button/20 transition"
                       >
                         User Profile
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a
@@ -192,35 +215,38 @@ function Header() {
         </div>
       </div>
 
+      {/* Mobile menu */}
       <div className="hidden w-full md:hidden" id="navbar-menu">
         <ul className="flex flex-col p-4 font-medium border-t border-foreground/10 bg-header">
           <li>
-            <a
-              href="#"
+            <Link
+              to="/"
               className="block py-2 px-3 text-button font-semibold rounded hover:bg-[#cbbba2] transition"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/donation"
+              onClick={handleDonationClick}
               className="block py-2 px-3 text-foreground rounded hover:bg-[#cbbba2] transition"
             >
               Donate
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/catalog"
               className="block py-2 px-3 text-foreground rounded hover:bg-[#cbbba2] transition"
             >
               Catalog
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
 
+      {/* Mobile search */}
       <div className="hidden w-full md:hidden" id="navbar-search">
         <div className="p-4 border-t border-foreground/10 bg-header">
           <div className="relative">

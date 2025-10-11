@@ -1,3 +1,4 @@
+// components/AuthCallback.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -12,23 +13,23 @@ const AuthCallback = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        console.log('Fetching token from:', `${BACKEND_URL}/api/auth/google-token`);
-
         const response = await fetch(`${BACKEND_URL}/api/auth/google-token`, {
           credentials: 'include',
         });
-
         console.log('Response status:', response.status);
 
         if (response.ok) {
           const data = await response.json();
           console.log('Received data:', data);
 
+          // Store tokens
           localStorage.setItem('accessToken', data.accessToken);
+
           if (data.googleAccessToken) {
             localStorage.setItem('googleAccessToken', data.googleAccessToken);
             setGoogleAccessToken(data.googleAccessToken);
           }
+
           if (data.googleRefreshToken) {
             localStorage.setItem('googleRefreshToken', data.googleRefreshToken);
             setGoogleRefreshToken(data.googleRefreshToken);
@@ -37,9 +38,16 @@ const AuthCallback = () => {
           setUser(data.user);
           console.log('User set:', data.user);
 
-          const destination = data.user.setupComplete ? '/' : '/initial-setup';
-          console.log('Navigating to:', destination);
-          navigate(destination);
+          // Check for intended route
+          const intendedRoute = localStorage.getItem('intendedRoute');
+          if (intendedRoute) {
+            localStorage.removeItem('intendedRoute');
+            navigate(intendedRoute);
+          } else {
+            const destination = data.user.setupComplete ? '/' : '/initial-setup';
+            console.log('Navigating to:', destination);
+            navigate(destination);
+          }
         } else {
           const errorText = await response.text();
           console.error('Auth callback failed:', response.status, errorText);
