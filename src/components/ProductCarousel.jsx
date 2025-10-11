@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 
 export default function ProductCarousel({ products = [] }) {
   const autoplay = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -52,7 +52,7 @@ export default function ProductCarousel({ products = [] }) {
 
   return (
     <section className="relative py-10 group">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Featured Products</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center">Recently Donated Products</h2>
 
       {/* Embla viewport */}
       <div ref={emblaRef} className="overflow-hidden">
@@ -100,7 +100,6 @@ export default function ProductCarousel({ products = [] }) {
         </div>
       </div>
 
-      {/* Prev/Next Buttons - Only visible on mobile */}
       <button
         onClick={() => emblaApi?.scrollPrev()}
         disabled={!canScrollPrev}

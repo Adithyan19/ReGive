@@ -1,4 +1,5 @@
 import ProductCarousel from '@/components/ProductCarousel.jsx';
+import Leaderboard from '@/components/Leaderboard.jsx';
 import Header from '../components/common/Header.jsx';
 import HeroSection from '../components/HeroSection.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
@@ -77,6 +78,16 @@ const dummyProducts = [
   },
   // Add up to 10 products
 ];
+const dummyUsers = [
+  { name: 'Rahul Sharma', points: 2450 },
+  { name: 'Priya Patel', points: 2380 },
+  { name: 'Amit Kumar', points: 2200 },
+  { name: 'Sneha Reddy', points: 1950 },
+  { name: 'Vikram Singh', points: 1850 },
+  { name: 'Ananya Iyer', points: 1720 },
+  { name: 'Rohan Mehta', points: 1650 },
+  { name: 'Kavya Nair', points: 1580 },
+];
 
 export default function Layout() {
   return (
@@ -88,6 +99,7 @@ export default function Layout() {
           {' '}
           <ProductCarousel products={dummyProducts} />
         </div>
+        <Leaderboard users={dummyUsers} />
       </main>
     </div>
   );
