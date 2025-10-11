@@ -2,6 +2,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --background: #f1f0e5;
   --foreground: #56453f;
@@ -38,7 +40,7 @@
   --font-sans: DM Sans, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
-  --radius: 0.5rem;
+  --radius: 0.625rem;
   --shadow-x: 2px;
   --shadow-y: 2px;
   --shadow-blur: 0px;
@@ -55,6 +57,8 @@
   --shadow-2xl: 2px 2px 0px 0px hsl(20 18% 51% / 0.28);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+  --ring: oklch(0.707 0.022 261.325);
+  --chart-4: oklch(0.828 0.189 84.429);
 }
 
 .dark {
@@ -108,6 +112,8 @@
   --shadow-lg: 2px 2px 0px 0px hsl(20 18% 30% / 0.11), 2px 4px 6px -1px hsl(20 18% 30% / 0.11);
   --shadow-xl: 2px 2px 0px 0px hsl(20 18% 30% / 0.11), 2px 8px 10px -1px hsl(20 18% 30% / 0.11);
   --shadow-2xl: 2px 2px 0px 0px hsl(20 18% 30% / 0.28);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-4: oklch(0.627 0.265 303.9);
 }
 
 @theme inline {
@@ -161,4 +167,15 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+  --color-chart-4: var(--chart-4);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
