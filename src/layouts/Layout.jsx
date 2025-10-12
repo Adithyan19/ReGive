@@ -3,6 +3,7 @@ import Leaderboard from '@/components/Leaderboard.jsx';
 import Header from '../components/common/Header.jsx';
 import HeroSection from '../components/HeroSection.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
+import Footer from '../components/common/Footer.jsx';
 import { useState } from 'react';
 
 const dummyProducts = [
@@ -90,17 +91,19 @@ const dummyUsers = [
 ];
 
 export default function Layout() {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen bg-background font-sans">
       <Header />
       <main className="flex-1 transition-all duration-300 pt-20">
         <HeroSection />
-        <div className="p-6">
+        <div className="p-7">
           {' '}
           <ProductCarousel products={dummyProducts} />
         </div>
-        <Leaderboard users={dummyUsers} />
+        {user && <Leaderboard users={dummyUsers} />}
       </main>
+      <Footer />
     </div>
   );
 }

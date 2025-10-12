@@ -31,7 +31,6 @@ function Header() {
     e.preventDefault();
     if (loading) return;
     if (!isAuthenticated) {
-      // Store the intended destination
       localStorage.setItem('intendedRoute', '/donation');
       handleGoogleLogin();
     } else {
@@ -51,21 +50,39 @@ function Header() {
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
             <ul className="flex space-x-8 font-medium">
               <li>
-                <Link to="/" className="text-button font-semibold hover:text-foreground transition">
+                <Link
+                  to="/"
+                  className={`${
+                    location.pathname === '/' ? 'text-button font-semibold' : 'text-foreground'
+                  } hover:text-button transition`}
+                >
                   Home
                 </Link>
               </li>
+
               <li>
                 <Link
                   to="/donation"
                   onClick={handleDonationClick}
-                  className="text-foreground hover:text-button transition"
+                  className={`${
+                    location.pathname.startsWith('/donation')
+                      ? 'text-button font-semibold'
+                      : 'text-foreground'
+                  } hover:text-button transition`}
                 >
                   Donate
                 </Link>
               </li>
+
               <li>
-                <Link to="/catalog" className="text-foreground hover:text-button transition">
+                <Link
+                  to="/catalog"
+                  className={`${
+                    location.pathname.startsWith('/catalog')
+                      ? 'text-button font-semibold'
+                      : 'text-foreground'
+                  } hover:text-button transition`}
+                >
                   Catalog
                 </Link>
               </li>
@@ -221,24 +238,38 @@ function Header() {
           <li>
             <Link
               to="/"
-              className="block py-2 px-3 text-button font-semibold rounded hover:bg-[#cbbba2] transition"
+              className={`block py-2 px-3 rounded transition ${
+                location.pathname === '/'
+                  ? 'text-button font-semibold bg-[#e8dcc8]'
+                  : 'text-foreground hover:bg-[#cbbba2]'
+              }`}
             >
               Home
             </Link>
           </li>
+
           <li>
             <Link
               to="/donation"
               onClick={handleDonationClick}
-              className="block py-2 px-3 text-foreground rounded hover:bg-[#cbbba2] transition"
+              className={`block py-2 px-3 rounded transition ${
+                location.pathname.startsWith('/donation')
+                  ? 'text-button font-semibold bg-[#e8dcc8]'
+                  : 'text-foreground hover:bg-[#cbbba2]'
+              }`}
             >
               Donate
             </Link>
           </li>
+
           <li>
             <Link
               to="/catalog"
-              className="block py-2 px-3 text-foreground rounded hover:bg-[#cbbba2] transition"
+              className={`block py-2 px-3 rounded transition ${
+                location.pathname.startsWith('/catalog')
+                  ? 'text-button font-semibold bg-[#e8dcc8]'
+                  : 'text-foreground hover:bg-[#cbbba2]'
+              }`}
             >
               Catalog
             </Link>

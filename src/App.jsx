@@ -9,6 +9,7 @@ import Donation from './pages/Donation.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import Catalog from './pages/Catalog.jsx';
 import Product from './pages/product/Product.jsx';
+import Admin from './pages/Admin.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function AppRoutes() {
@@ -20,7 +21,6 @@ function AppRoutes() {
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/product" element={<Product />} />
 
-      {/* Protected Routes */}
       <Route
         path="/category"
         element={
@@ -42,6 +42,15 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      {/* Need to make this extra protected so that only admin can access this */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <Admin />
           </ProtectedRoute>
         }
       />
