@@ -68,8 +68,8 @@ const AuthCallback = () => {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center">
-          <p className="text-button">{error}</p>
-          <p className="mt-2 text-button">Redirecting to home...</p>
+          <p className="text-primary">{error}</p>
+          <p className="mt-2 text-primary">Redirecting to home...</p>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ const AuthCallback = () => {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-        <p className="mt-4 text-button">Authenticating...</p>
+        <p className="mt-4 text-primary">Authenticating...</p>
       </div>
     </div>
   );

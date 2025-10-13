@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import heroImage from '../assets/Untitled.jpg';
+import heroImage from '../assets/student.svg';
 
 export default function HeroSection() {
   return (
@@ -14,7 +14,7 @@ export default function HeroSection() {
           </h1>
           <p className="text-lg md:text-xl text-primary-100 leading-relaxed">
             Regive is a platform that promotes and strengthens the Resource sharing ecosystem in
-            TKMCE.
+            colleges.
           </p>
 
           <p className="text-lg md:text-2xl text-primary-500 font-semibold">

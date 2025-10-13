@@ -7,8 +7,6 @@
 :root {
   --background: #f1f0e5;
   --foreground: #56453f;
-  --header: #baab92;
-  --button: #a37764;
   --card: #f1f0e5;
   --card-foreground: #56453f;
   --popover: #ffffff;
@@ -80,11 +78,9 @@
   --destructive-foreground: #2d2521;
   --border: #56453f;
   --input: #56453f;
-  --button: #c39e88;
   --chart-1: #c39e88;
   --chart-2: #baab92;
   --chart-3: #a37764;
-  --header: #8a655a;
   --chart-5: #a28777;
   --sidebar: #1f1a17;
   --sidebar-foreground: #f1f0e5;
@@ -135,11 +131,11 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
-  --color-button: var(--button);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
-  --color-header: var(--header);
+  --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -167,7 +163,7 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
-  --color-chart-4: var(--chart-4);
+
   --color-ring: var(--ring);
 }
 
