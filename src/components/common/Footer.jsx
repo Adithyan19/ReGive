@@ -56,11 +56,13 @@ function Footer() {
                   Catalog
                 </Link>
               </li>
-              <li>
-                <Link to="/user-profile" className="hover:text-primary transition">
-                  Profile
-                </Link>
-              </li>
+              {user && (
+                <li>
+                  <Link to="/user-profile" className="hover:text-primary transition">
+                    Profile
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 

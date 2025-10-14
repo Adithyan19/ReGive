@@ -243,7 +243,7 @@ function Header() {
               to="/"
               className={`block py-2 px-3 rounded transition ${
                 location.pathname === '/'
-                  ? 'text-primary font-semibold bg-[#e8dcc8]'
+                  ? 'text-primary font-semibold bg-sidebar'
                   : 'text-foreground hover:bg-[#cbbba2]'
               }`}
             >
@@ -257,7 +257,7 @@ function Header() {
               onClick={handleDonationClick}
               className={`block py-2 px-3 rounded transition ${
                 location.pathname.startsWith('/donation')
-                  ? 'text-primary font-semibold bg-[#e8dcc8]'
+                  ? 'text-primary font-semibold bg-sidebar'
                   : 'text-foreground hover:bg-[#cbbba2]'
               }`}
             >
@@ -270,7 +270,7 @@ function Header() {
               to="/catalog"
               className={`block py-2 px-3 rounded transition ${
                 location.pathname.startsWith('/catalog')
-                  ? 'text-primary font-semibold bg-[#e8dcc8]'
+                  ? 'text-primary font-semibold bg-sidebar'
                   : 'text-foreground hover:bg-[#cbbba2]'
               }`}
             >

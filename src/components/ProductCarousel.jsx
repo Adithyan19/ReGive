@@ -90,7 +90,7 @@ export default function ProductCarousel({ products = [] }) {
 
                 <CardFooter className="flex justify-between items-center pt-4 border-t">
                   <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
-                  <Button size="sm" className="rounded-full px-6 bg-amber-700 hover:bg-amber-800">
+                  <Button size="sm" className="rounded-lg px-6 bg-primary hover:bg-amber-800">
                     Buy
                   </Button>
                 </CardFooter>
