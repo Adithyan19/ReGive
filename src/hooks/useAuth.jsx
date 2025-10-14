@@ -184,7 +184,7 @@ export function AuthProvider({ children }) {
         credentials: 'include',
       });
     } catch (error) {
-      console.log('Logout error:', error);
+      console.error('Logout error:', error);
     }
   };
 

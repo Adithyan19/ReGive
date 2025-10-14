@@ -103,14 +103,16 @@ export default function ProductCarousel({ products = [] }) {
       <button
         onClick={() => emblaApi?.scrollPrev()}
         disabled={!canScrollPrev}
-        className="absolute top-1/2 left-2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 md:hidden z-10 hover:bg-gray-50"
+        className="absolute top-1/2 left-2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg disabled:opacity-30
+         disabled:cursor-not-allowed transition-opacity duration-300 md:hidden z-10 hover:bg-gray-50"
       >
         <ArrowLeft className="w-5 h-5 text-gray-700" />
       </button>
       <button
         onClick={() => emblaApi?.scrollNext()}
         disabled={!canScrollNext}
-        className="absolute top-1/2 right-2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 md:hidden z-10 hover:bg-gray-50"
+        className="absolute top-1/2 right-2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg disabled:opacity-30
+         disabled:cursor-not-allowed transition-opacity duration-300 md:hidden z-10 hover:bg-gray-50"
       >
         <ArrowRight className="w-5 h-5 text-gray-700" />
       </button>

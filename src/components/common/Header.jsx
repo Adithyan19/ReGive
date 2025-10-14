@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth.jsx';
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import 'flowbite';
-import headerimg from '../../assets/react.svg';
+import headerimg from '../../assets/logo.svg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
@@ -43,7 +43,7 @@ function Header() {
       <div className="w-full p-4 relative">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src={headerimg} className="h-8" alt="Regive Logo" />
+            <img src={headerimg} className="h-10" alt="Regive Logo" />
             <span className="self-center text-2xl font-semibold">Regive</span>
           </Link>
 
@@ -54,7 +54,7 @@ function Header() {
                   to="/"
                   className={`${
                     location.pathname === '/' ? 'text-primary font-semibold' : 'text-foreground'
-                  } hover:text-primary transition`}
+                  } hover:text-primary transition text-xl`}
                 >
                   Home
                 </Link>
@@ -68,7 +68,7 @@ function Header() {
                     location.pathname.startsWith('/donation')
                       ? 'text-primary font-semibold'
                       : 'text-foreground'
-                  } hover:text-primary transition`}
+                  } hover:text-primary transition text-xl`}
                 >
                   Donate
                 </Link>
@@ -81,7 +81,7 @@ function Header() {
                     location.pathname.startsWith('/catalog')
                       ? 'text-primary font-semibold'
                       : 'text-foreground'
-                  } hover:text-primary transition`}
+                  } hover:text-primary transition text-xl`}
                 >
                   Catalog
                 </Link>
@@ -95,7 +95,8 @@ function Header() {
               data-collapse-toggle="navbar-search"
               aria-controls="navbar-search"
               aria-expanded="false"
-              className="md:hidden text-foreground hover:bg-[#cbbba2] focus:outline-none focus:ring-4 focus:ring-primary rounded-lg text-sm p-2.5"
+              className="md:hidden text-foreground hover:bg-[#cbbba2] focus:outline-none focus:ring-4
+               focus:ring-primary rounded-lg text-sm p-2.5"
             >
               <svg
                 className="w-5 h-5"
@@ -135,7 +136,8 @@ function Header() {
               <input
                 type="text"
                 id="search-navbar"
-                className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg bg-[#f1f0e5] focus:ring-primary focus:border-primary"
+                className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg
+                 bg-[#f1f0e5] focus:ring-primary focus:border-primary"
                 placeholder="Search..."
               />
             </div>
@@ -208,7 +210,8 @@ function Header() {
             <button
               data-collapse-toggle="navbar-menu"
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-foreground rounded-lg md:hidden hover:bg-[#cbbba2] focus:outline-none focus:ring-2 focus:ring-primary"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-foreground rounded-lg md:hidden
+               hover:bg-[#cbbba2] focus:outline-none focus:ring-2 focus:ring-primary"
               aria-controls="navbar-menu"
               aria-expanded="false"
             >
@@ -300,7 +303,8 @@ function Header() {
             </div>
             <input
               type="text"
-              className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg bg-[#f1f0e5] focus:ring-primary focus:border-primary"
+              className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg bg-[#f1f0e5]
+               focus:ring-primary focus:border-primary"
               placeholder="Search..."
             />
           </div>

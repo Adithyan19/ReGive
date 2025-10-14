@@ -16,13 +16,10 @@ const AuthCallback = () => {
         const response = await fetch(`${BACKEND_URL}/api/auth/google-token`, {
           credentials: 'include',
         });
-        console.log('Response status:', response.status);
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Received data:', data);
 
-          // Store tokens
           localStorage.setItem('accessToken', data.accessToken);
 
           if (data.googleAccessToken) {
@@ -36,16 +33,14 @@ const AuthCallback = () => {
           }
 
           setUser(data.user);
-          console.log('User set:', data.user);
 
-          // Check for intended route
           const intendedRoute = localStorage.getItem('intendedRoute');
           if (intendedRoute) {
             localStorage.removeItem('intendedRoute');
+            console.log(intendedRoute);
             navigate(intendedRoute);
           } else {
             const destination = data.user.setupComplete ? '/' : '/initial-setup';
-            console.log('Navigating to:', destination);
             navigate(destination);
           }
         } else {
