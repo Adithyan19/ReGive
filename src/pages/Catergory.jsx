@@ -88,7 +88,7 @@ export default function SelectCategory() {
     if (selectedCategory && selectedSubcategory) {
       localStorage.setItem('selectedCategory', selectedCategory.title);
       localStorage.setItem('selectedSubcategory', selectedSubcategory);
-      navigate('/donate/details');
+      navigate('/donate');
     }
   };
 

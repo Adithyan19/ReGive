@@ -436,3 +436,57 @@
     .action-buttons { flex-direction: column; align-items: center; }
     .btn { width: 100%; max-width: 300px; }
 }
+
+
+.donate-container {
+    max-width: 800px;
+    margin: 140px auto;
+    padding: 0 20px;
+}
+
+.donate-header {
+    background: var(--primary); /* e.g., teal/brownish from your category theme */
+    color: var(--primary-foreground);
+    padding: 30px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.donate-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.donate-header p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.donate-form {
+    background: var(--secondary-background, white);
+    padding: 40px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid var(--primary);
+    border-top: none;
+}
+
+/* Add all the form styles here, replacing teal colors with category theme variables */
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--secondary-background, white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+/* Continue with other form sections like image-upload, condition-option, toggle, contact-preferences, etc. */
+

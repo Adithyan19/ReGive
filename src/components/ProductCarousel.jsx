@@ -133,3 +133,5 @@ export default function ProductCarousel({ products = [] }) {
     </section>
   );
 }
+
+
