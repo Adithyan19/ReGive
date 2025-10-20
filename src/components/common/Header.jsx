@@ -31,10 +31,10 @@ function Header() {
     e.preventDefault();
     if (loading) return;
     if (!isAuthenticated) {
-      localStorage.setItem('intendedRoute', '/donation');
+      localStorage.setItem('intendedRoute', '/category');
       handleGoogleLogin();
     } else {
-      navigate('/donation');
+      navigate('/category');
     }
   };
 
