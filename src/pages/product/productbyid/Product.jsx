@@ -6,6 +6,7 @@ export default function Product() {
       <Header />
       <main className="flex-1 transition-all duration-300 pt-20">
         <p className="text-3xl font-bold text-center text-primary py-10">Product by Id Page</p>
+        <p>When a particular product is selected that will come here</p>
       </main>
       <Footer />
     </div>
