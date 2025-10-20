@@ -59,7 +59,7 @@ export default function Leaderboard({ users = [] }) {
                     {getRankIcon(index)}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-lg">{user.name}</p>
+                    <p className="font-semibold text-gray-900 text-lg">{user.displayName.toUpperCase()}</p>
                   </div>
                 </div>
 
