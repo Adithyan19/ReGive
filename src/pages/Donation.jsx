@@ -143,20 +143,38 @@ export default function Donate() {
     try {
       const formData = new FormData();
 
-      const itemTitle = document.getElementById('itemTitle').value;
-      const description = document.getElementById('description').value;
-      const condition = document.querySelector('input[name="condition"]:checked').value;
-      const location = document.getElementById('location').value;
-      const availableUntil = document.getElementById('availableUntil').value;
-      const urgentDonation = document.getElementById('urgentDonation').checked ? 'on' : '';
-      const isPaidValue = document.querySelector('input[name="isPaid"]:checked').value;
-      const price = document.getElementById('price').value;
+      // Get all form values safely
+      const itemTitle = document.getElementById('itemTitle')?.value || '';
+      const description = document.getElementById('description')?.value || '';
+      const conditionElement = document.querySelector('input[name="condition"]:checked');
+      const condition = conditionElement?.value || '';
+      const location = document.getElementById('location')?.value || '';
+      const availableUntil = document.getElementById('availableUntil')?.value || '';
+      const urgentDonation = document.getElementById('urgentDonation')?.checked ? 'on' : '';
+      const isPaidElement = document.querySelector('input[name="isPaid"]:checked');
+      const isPaidValue = isPaidElement?.value || 'no';
+      const price = document.getElementById('price')?.value || '0';
 
       const category = localStorage.getItem('selectedCategory') || '';
       const subcategory = localStorage.getItem('selectedSubcategory') || '';
 
+      // Validate required fields
       if (!category) {
         alert('Please select a category first!');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+
+      if (!condition) {
+        alert('Please select item condition');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+
+      if (!location) {
+        alert('Please select a location');
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
         return;
@@ -172,7 +190,7 @@ export default function Donate() {
       formData.append('urgentDonation', urgentDonation);
       formData.append('isPaid', isPaidValue);
       formData.append('price', price);
-      formData.append('userId', user.id);
+      formData.append('userId', user?.id || '');
 
       const contactMethods = [];
       document.querySelectorAll('input[name="contactMethods"]:checked').forEach((cb) => {
@@ -207,7 +225,7 @@ export default function Donate() {
         document.getElementById('donateForm').reset();
         setUploadedImages([]);
         setTimeout(() => setShowSuccess(false), 5000);
-        alert(` Donation posted successfully! ${data.imagesUploaded} images uploaded.`);
+        alert(` Donation posted successfully! images uploaded.`);
       } else {
         alert(' Error: ' + (data.message || data.error));
       }
