@@ -50,6 +50,18 @@ export default function ProductCarousel({ products = [] }) {
     };
   }, [emblaApi]);
 
+  const getFirstImage = (imageURL) => {
+    if (!imageURL) return 'https://via.placeholder.com/400x300?text=No+Image';
+    if (Array.isArray(imageURL) && imageURL.length > 0) {
+      return imageURL[0];
+    }
+    if (typeof imageURL === 'string') {
+      return imageURL;
+    }
+
+    return 'https://via.placeholder.com/400x300?text=No+Image';
+  };
+
   return (
     <section className="relative py-10 group">
       <h2 className="text-2xl font-semibold mb-6 text-center">Recently Donated Products</h2>
@@ -67,7 +79,7 @@ export default function ProductCarousel({ products = [] }) {
                 idx === products.length - 1 ? 'mr-4 md:mr-6' : ''
               )}
             >
-              <Card className="h-full flex flex-col hover:shadow-xl transition-all duration-300 ">
+              <Card className="h-full flex flex-col hover:shadow-xl transition-all duration-300">
                 <CardHeader className="space-y-2 pb-3">
                   <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
                   <CardDescription className="text-sm text-gray-500">
@@ -76,11 +88,14 @@ export default function ProductCarousel({ products = [] }) {
                 </CardHeader>
 
                 <CardContent className="flex-1 flex flex-col space-y-3 pb-4">
-                  <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
+                  <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
                     <img
-                      src={product.imageURL}
+                      src={getFirstImage(product.imageURL)}
                       alt={product.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+                      }}
                     />
                   </div>
                   <p className="text-sm text-gray-600 line-clamp-2 px-1">
@@ -88,26 +103,25 @@ export default function ProductCarousel({ products = [] }) {
                   </p>
                 </CardContent>
 
-  <CardFooter className="flex justify-between items-center pt-4 border-t">
-  {product.isPaid ? (
-    <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
-  ) : (
-    <p className="font-semibold text-green-600 text-lg">Free</p>
-  )}
+                <CardFooter className="flex justify-between items-center pt-4 border-t">
+                  {product.isPaid ? (
+                    <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
+                  ) : (
+                    <p className="font-semibold text-green-600 text-lg">Free</p>
+                  )}
 
-  <Button
-    size="sm"
-    className={cn(
-      'rounded-lg px-6 transition-colors duration-300',
-      product.isPaid
-        ? 'bg-primary hover:bg-amber-800'
-        : 'bg-green-500 hover:bg-green-600'
-    )}
-  >
-    {product.isPaid ? 'Buy' : 'Claim'}
-  </Button>
-</CardFooter>
-
+                  <Button
+                    size="sm"
+                    className={cn(
+                      'rounded-lg px-6 transition-colors duration-300',
+                      product.isPaid
+                        ? 'bg-primary hover:bg-amber-800'
+                        : 'bg-green-500 hover:bg-green-600'
+                    )}
+                  >
+                    {product.isPaid ? 'Buy' : 'Claim'}
+                  </Button>
+                </CardFooter>
               </Card>
             </div>
           ))}
@@ -133,5 +147,3 @@ export default function ProductCarousel({ products = [] }) {
     </section>
   );
 }
-
-
