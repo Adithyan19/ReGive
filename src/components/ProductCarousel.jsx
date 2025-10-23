@@ -1,5 +1,7 @@
 // src/components/ProductCarousel.jsx
 import React, { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import {
@@ -15,6 +17,8 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function ProductCarousel({ products = [] }) {
+  const navigate = useNavigate();
+
   const autoplay = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
@@ -107,20 +111,24 @@ export default function ProductCarousel({ products = [] }) {
                   {product.isPaid ? (
                     <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
                   ) : (
-                    <p className="font-semibold text-green-600 text-lg">Free</p>
+                    <p className="font-semibold text-green-900 text-lg">Free</p>
                   )}
 
-                  <Button
-                    size="sm"
-                    className={cn(
-                      'rounded-lg px-6 transition-colors duration-300',
-                      product.isPaid
-                        ? 'bg-primary hover:bg-amber-800'
-                        : 'bg-green-500 hover:bg-green-600'
-                    )}
-                  >
-                    {product.isPaid ? 'Buy' : 'Claim'}
-                  </Button>
+<Button
+  size="sm"
+  className={cn(
+    'rounded-lg px-6 transition-colors duration-300',
+    product.isPaid
+      ? 'bg-primary hover:bg-amber-800'
+      : 'bg-green-900 hover:bg-green-700'
+  )}
+  onClick={() =>
+    navigate(`/product/${product._id}`, { state: { product } })
+  }
+>
+  {product.isPaid ? 'Buy' : 'Claim'}
+</Button>
+
                 </CardFooter>
               </Card>
             </div>

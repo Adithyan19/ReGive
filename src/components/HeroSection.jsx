@@ -13,8 +13,10 @@ export default function HeroSection() {
             Donate to those who need.
           </h1>
           <p className="text-lg md:text-xl text-primary-100 leading-relaxed">
-            Regive is a platform that promotes and strengthens the Resource sharing ecosystem in
-            colleges.
+            reGive is a simple and smart platform that connects college students to share, donate,
+            and find useful items within their campus. Whether it’s books, gadgets, or accessories,
+            reGive makes giving and receiving effortless while building a culture of sustainability
+            and collaboration among students.
           </p>
 
           <p className="text-lg md:text-2xl text-primary-500 font-semibold">
