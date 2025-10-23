@@ -11,6 +11,9 @@ export default function Donate() {
   const [isPaid, setIsPaid] = useState(false);
   const fileInputRef = useRef(null);
   const [draftTimer, setDraftTimer] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState({});
+
   const {user} =  useAuth()
   useEffect(() => {
     const draft = localStorage.getItem("donationDraft");
@@ -29,7 +32,6 @@ export default function Donate() {
       if (draftData.isPaid === "yes") setIsPaid(true);
     }
 
-    // Auto-save draft every 30 seconds
     const timer = setInterval(() => saveDraft(), 30000);
     setDraftTimer(timer);
     return () => clearInterval(timer);
@@ -205,6 +207,33 @@ const res = await fetch(`${BACKEND_URL}/api/donation/donate`, {
     setIsPaid(e.target.value === "yes");
   };
 
+const handlePreview = () => {
+  const form = document.getElementById("donateForm");
+  const formData = new FormData(form);
+
+  const contactMethods = [];
+  document.querySelectorAll('input[name="contactMethods"]:checked').forEach(cb => {
+    contactMethods.push(cb.value);
+  });
+
+  const data = {
+    itemTitle: formData.get("itemTitle"),
+    description: formData.get("description"),
+    condition: formData.get("condition"),
+    location: formData.get("location"),
+    availableUntil: formData.get("availableUntil"),
+    urgentDonation: formData.get("urgentDonation") ? "Yes" : "No",
+    isPaid: formData.get("isPaid"),
+    price: formData.get("price"),
+    contactMethods,
+    images: uploadedImages.map(img => img.url),
+  };
+
+  setPreviewData(data);
+  setShowPreview(true);
+};
+
+
   return (
     <>
       <Header />
@@ -316,7 +345,6 @@ const res = await fetch(`${BACKEND_URL}/api/donation/donate`, {
             </div>
           </div>
 
-          {/* Item Condition */}
           <div className="mb-10">
             <h3 className="text-xl font-semibold text-primary mb-6 flex items-center gap-2">
               Item Condition
@@ -489,12 +517,14 @@ const res = await fetch(`${BACKEND_URL}/api/donation/donate`, {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-end pt-8 border-t border-border">
-            <button 
-              type="button" 
-              className="px-8 py-4 border-2 border-primary bg-card text-primary rounded-lg font-semibold transition-all hover:bg-secondary hover:-translate-y-0.5"
-            >
-              Preview
-            </button>
+<button 
+  type="button" 
+  onClick={handlePreview}
+  className="px-8 py-4 border-2 border-primary bg-card text-primary rounded-lg font-semibold transition-all hover:bg-secondary hover:-translate-y-0.5"
+>
+  Preview
+</button>
+
             <button 
               type="submit" 
               id="submitBtn"
@@ -505,6 +535,43 @@ const res = await fetch(`${BACKEND_URL}/api/donation/donate`, {
           </div>
         </form>
       </div>
+{showPreview && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white w-full max-w-lg p-8 rounded-xl shadow-xl relative overflow-y-auto max-h-[90vh]">
+      <button 
+        onClick={() => setShowPreview(false)} 
+        className="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl font-bold"
+      >
+        ×
+      </button>
+      <h2 className="text-2xl font-bold text-primary mb-4">Preview Your Donation</h2>
+
+      <p><strong>Title:</strong> {previewData.itemTitle}</p>
+      <p><strong>Description:</strong> {previewData.description}</p>
+      <p><strong>Condition:</strong> {previewData.condition}</p>
+      <p><strong>Location:</strong> {previewData.location}</p>
+      <p><strong>Available Until:</strong> {previewData.availableUntil || "—"}</p>
+      <p><strong>Urgent Donation:</strong> {previewData.urgentDonation}</p>
+      <p><strong>Is Paid:</strong> {previewData.isPaid}</p>
+      {previewData.isPaid === "yes" && (
+        <p><strong>Price:</strong> ₹{previewData.price}</p>
+      )}
+      <p><strong>Contact Methods:</strong> {previewData.contactMethods?.join(", ")}</p>
+
+      {previewData.images?.length > 0 && (
+        <>
+          <p className="mt-4 mb-2"><strong>Images:</strong></p>
+          <div className="grid grid-cols-2 gap-3">
+            {previewData.images.map((img, i) => (
+              <img key={i} src={img} alt="preview" className="rounded-lg border border-gray-300" />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+)}
+
       <Footer />
     </>
   );
