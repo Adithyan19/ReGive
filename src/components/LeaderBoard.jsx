@@ -44,7 +44,7 @@ export default function Leaderboard({ users = [] }) {
 
       <Card className="shadow-lg">
         <CardHeader className="bg-gradient-to-r border-b">
-          <CardTitle className="text-xl">Top Doners</CardTitle>
+          <CardTitle className="text-xl">Top Donors</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="divide-y">
@@ -59,7 +59,7 @@ export default function Leaderboard({ users = [] }) {
                     {getRankIcon(index)}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-lg">{user.name}</p>
+                    <p className="font-semibold text-gray-900 text-lg">{user.displayName.toUpperCase()}</p>
                   </div>
                 </div>
 

@@ -30,7 +30,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/donation"
+        path="/donate"
         element={
           <ProtectedRoute>
             <Donation />
