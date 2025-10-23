@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth.jsx';
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import 'flowbite';
-import headerimg from '../../assets/logo.svg';
+import headerimg from '../../assets/logo_off.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
@@ -43,8 +43,7 @@ function Header() {
       <div className="w-full p-4 relative">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src={headerimg} className="h-10" alt="Regive Logo" />
-            <span className="self-center text-2xl font-semibold">Regive</span>
+<img src={headerimg} style={{ height: "75px", width: "auto" }} alt="ReGive Logo" />
           </Link>
 
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
@@ -235,7 +234,6 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div className="hidden w-full md:hidden" id="navbar-menu">
         <ul className="flex flex-col p-4 font-medium border-t border-foreground/10 bg-secondary">
           <li>
@@ -280,7 +278,6 @@ function Header() {
         </ul>
       </div>
 
-      {/* Mobile search */}
       <div className="hidden w-full md:hidden" id="navbar-search">
         <div className="p-4 border-t border-foreground/10 bg-secondary">
           <div className="relative">

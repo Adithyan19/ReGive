@@ -8,9 +8,10 @@ import Category from './pages/Catergory.jsx';
 import Donation from './pages/Donation.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import Catalog from './pages/Catalog.jsx';
-import Product from './pages/product/Product.jsx';
 import Admin from './pages/Admin.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ProductDetail from './pages/product/ProductDetail.jsx';
+
 
 function AppRoutes() {
   return (
@@ -19,7 +20,8 @@ function AppRoutes() {
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/initial-setup" element={<InitialSetup />} />
       <Route path="/catalog" element={<Catalog />} />
-      <Route path="/product" element={<Product />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
+
 
       <Route
         path="/category"
@@ -45,7 +47,6 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      {/* Need to make this extra protected so that only admin can access this */}
       <Route
         path="/admin"
         element={
