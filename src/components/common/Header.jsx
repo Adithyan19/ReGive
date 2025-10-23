@@ -31,10 +31,10 @@ function Header() {
     e.preventDefault();
     if (loading) return;
     if (!isAuthenticated) {
-      localStorage.setItem('intendedRoute', '/donation');
+      localStorage.setItem('intendedRoute', '/category');
       handleGoogleLogin();
     } else {
-      navigate('/donation');
+      navigate('/category');
     }
   };
 
@@ -136,7 +136,7 @@ function Header() {
               <input
                 type="text"
                 id="search-navbar"
-                className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg
+                className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-2xl
                  bg-[#f1f0e5] focus:ring-primary focus:border-primary"
                 placeholder="Search..."
               />

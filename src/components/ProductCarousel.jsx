@@ -78,7 +78,7 @@ export default function ProductCarousel({ products = [] }) {
                 <CardContent className="flex-1 flex flex-col space-y-3 pb-4">
                   <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
                     <img
-                      src={product.image}
+                      src={product.imageURL}
                       alt={product.name}
                       className="w-full h-full object-cover"
                     />
@@ -88,12 +88,26 @@ export default function ProductCarousel({ products = [] }) {
                   </p>
                 </CardContent>
 
-                <CardFooter className="flex justify-between items-center pt-4 border-t">
-                  <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
-                  <Button size="sm" className="rounded-lg px-6 bg-primary hover:bg-amber-800">
-                    Buy
-                  </Button>
-                </CardFooter>
+  <CardFooter className="flex justify-between items-center pt-4 border-t">
+  {product.isPaid ? (
+    <p className="font-bold text-xl text-gray-900">₹{product.price}</p>
+  ) : (
+    <p className="font-semibold text-green-600 text-lg">Free</p>
+  )}
+
+  <Button
+    size="sm"
+    className={cn(
+      'rounded-lg px-6 transition-colors duration-300',
+      product.isPaid
+        ? 'bg-primary hover:bg-amber-800'
+        : 'bg-green-500 hover:bg-green-600'
+    )}
+  >
+    {product.isPaid ? 'Buy' : 'Claim'}
+  </Button>
+</CardFooter>
+
               </Card>
             </div>
           ))}
@@ -119,3 +133,5 @@ export default function ProductCarousel({ products = [] }) {
     </section>
   );
 }
+
+

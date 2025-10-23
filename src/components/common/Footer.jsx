@@ -44,7 +44,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/donation"
+                  to="/category"
                   onClick={handleDonationClick}
                   className="hover:text-primary transition"
                 >
