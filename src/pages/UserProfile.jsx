@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { useAuth } from "@/hooks/useAuth";
+import MyProducts from "@/pages/MyProducts";
 
 export default function UserProfile() {
   const { user, setUser, fetchWithAuth } = useAuth();
@@ -9,6 +10,9 @@ export default function UserProfile() {
   const [editForm, setEditForm] = useState(null);
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   // Initialize form when user loads
   useEffect(() => {
@@ -67,23 +71,6 @@ export default function UserProfile() {
     } catch (error) {
       console.error(error);
       alert("Something went wrong");
-    }
-  };
-
-  // Delete a product
-  const handleDeleteProduct = async (productId) => {
-    try {
-      const response = await fetchWithAuth(`/api/products/${productId}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        setProducts(products.filter((p) => p._id !== productId));
-      } else {
-        console.error("Failed to delete product");
-      }
-    } catch (error) {
-      console.error("Error deleting product:", error);
     }
   };
 
@@ -164,32 +151,7 @@ export default function UserProfile() {
         </section>
 
         {/* User Products */}
-        <section className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">My Products</h2>
-
-          {loadingProducts ? (
-            <p>Loading products...</p>
-          ) : products.length === 0 ? (
-            <p>No products available.</p>
-          ) : (
-            <ul className="space-y-2">
-              {products.map((product) => (
-                <li
-                  key={product._id}
-                  className="flex justify-between items-center border-b py-2"
-                >
-                  <span>{product.name}</span>
-                  <button
-                    onClick={() => handleDeleteProduct(product._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+        <MyProducts products={products} setProducts={setProducts} />
       </main>
       <Footer />
     </div>
