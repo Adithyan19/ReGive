@@ -56,7 +56,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-background font-sans">
       <Header />
-      <main className="flex-1 transition-all duration-300 pt-20">
+      <main className="flex-1 transition-all duration-300 pt-30">
         <HeroSection />
 
         <div className="p-7">

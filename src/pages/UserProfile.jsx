@@ -80,7 +80,7 @@ export default function UserProfile() {
     <div className="flex flex-col min-h-screen bg-background font-sans">
       <Header />
       <main className="flex-1 pt-20 transition-all duration-300 px-4 md:px-20">
-        <h1 className="text-3xl font-bold text-center text-primary py-10">
+        <h1 className="text-3xl font-bold text-center text-primary py-10 mt-7">
           User Profile
         </h1>
 
