@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 export default function MyProducts({ products, setProducts }) {
   const { fetchWithAuth } = useAuth();
@@ -15,31 +15,31 @@ export default function MyProducts({ products, setProducts }) {
       }
     };
     if (selectedProduct) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selectedProduct]);
 
   const handleDeleteProduct = async (id) => {
     try {
       const response = await fetchWithAuth(`${BACKEND_URL}/api/item/${id}`, {
-        method: "DELETE",
-        credentials: "include",
+        method: 'DELETE',
+        credentials: 'include',
       });
 
       if (response.ok) {
         setProducts(products.filter((p) => p._id !== id));
         setSelectedProduct(null);
       } else {
-        alert("Failed to delete product");
+        alert('Failed to delete product');
       }
     } catch (err) {
       console.error(err);
-      alert("Error deleting product");
+      alert('Error deleting product');
     }
   };
 
@@ -58,7 +58,7 @@ export default function MyProducts({ products, setProducts }) {
               onClick={() => setSelectedProduct(product)}
             >
               <img
-                src={`${BACKEND_URL}${product.imageURL[0] || "/placeholder.png"}`}
+                src={`${product.imageURL[0] || '/placeholder.png'}`}
                 alt={product.name}
                 className="w-full h-32 object-cover"
               />
@@ -79,7 +79,7 @@ export default function MyProducts({ products, setProducts }) {
               &times;
             </button>
             <img
-              src={`${BACKEND_URL}${selectedProduct.imageURL[0] || "/placeholder.png"}`}
+              src={`${selectedProduct.imageURL[0] || '/placeholder.png'}`}
               alt={selectedProduct.name}
               className="w-full h-64 object-cover rounded mb-4"
             />
@@ -95,7 +95,7 @@ export default function MyProducts({ products, setProducts }) {
               <strong>Pickup:</strong> {selectedProduct.pickup}
             </p>
             <p className="mt-1">
-              <strong>Available until:</strong>{" "}
+              <strong>Available until:</strong>{' '}
               {new Date(selectedProduct.available_until).toLocaleDateString()}
             </p>
 

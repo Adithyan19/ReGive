@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
-import { useAuth } from "@/hooks/useAuth";
-import MyProducts from "@/pages/MyProducts";
+import { useState, useEffect } from 'react';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
+import { useAuth } from '@/hooks/useAuth';
+import MyProducts from '@/pages/MyProducts';
 
 export default function UserProfile() {
   const { user, setUser, fetchWithAuth } = useAuth();
@@ -12,7 +12,7 @@ export default function UserProfile() {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
   // Initialize form when user loads
   useEffect(() => {
@@ -21,56 +21,54 @@ export default function UserProfile() {
     }
   }, [user]);
 
-  // Fetch user's products
   useEffect(() => {
     const fetchUserItems = async () => {
       if (!user) return;
-
+      console.log('Fetching for user ID:', user.id); // Add this line
       try {
-        const response = await fetchWithAuth("/api/item/my-items");
+        const response = await fetchWithAuth(`${BACKEND_URL}/api/item/my-items`);
+        console.log('Response status:', response.status); // Add this
         if (response.ok) {
           const data = await response.json();
-          setProducts(data.items); // store in same state
+          console.log('Fetched items:', data.items); // Add this
+          setProducts(data.items);
         } else {
-          console.error("Failed to fetch items");
+          console.error('Failed to fetch items');
         }
       } catch (error) {
-        console.error("Error fetching items:", error);
+        console.error('Error fetching items:', error);
       } finally {
         setLoadingProducts(false);
       }
     };
-
     fetchUserItems();
   }, [user]);
 
-  // Handle form changes
   const handleChange = (e) => {
     setEditForm({ ...editForm, [e.target.name]: e.target.value });
   };
 
-  // Save user details
   const handleSave = async () => {
     try {
-      const response = await fetchWithAuth("/api/user/user-profile", {
-        method: "PUT", // MUST match backend
-        headers: { "Content-Type": "application/json" },
+      const response = await fetchWithAuth(`${BACKEND_URL}/api/user/user-profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setUser(data.user); // backend must return updated user JSON
+        setUser(data.user);
         setEditing(false);
-        alert("Profile updated successfully");
+        alert('Profile updated successfully');
       } else {
         const err = await response.json();
         console.error(err);
-        alert(err.message || "Failed to update user");
+        alert(err.message || 'Failed to update user');
       }
     } catch (error) {
       console.error(error);
-      alert("Something went wrong");
+      alert('Something went wrong');
     }
   };
 
@@ -80,9 +78,7 @@ export default function UserProfile() {
     <div className="flex flex-col min-h-screen bg-background font-sans">
       <Header />
       <main className="flex-1 pt-20 transition-all duration-300 px-4 md:px-20">
-        <h1 className="text-3xl font-bold text-center text-primary py-10 mt-7">
-          User Profile
-        </h1>
+        <h1 className="text-3xl font-bold text-center text-primary py-10 mt-7">User Profile</h1>
 
         {/* User Details */}
         <section className="bg-white rounded-lg shadow-md p-6 mb-10">
@@ -115,16 +111,10 @@ export default function UserProfile() {
                 placeholder="Address"
               />
               <div className="flex space-x-4">
-                <button
-                  onClick={handleSave}
-                  className="bg-primary text-white px-4 py-2 rounded"
-                >
+                <button onClick={handleSave} className="bg-primary text-white px-4 py-2 rounded">
                   Save
                 </button>
-                <button
-                  onClick={() => setEditing(false)}
-                  className="bg-gray-300 px-4 py-2 rounded"
-                >
+                <button onClick={() => setEditing(false)} className="bg-gray-300 px-4 py-2 rounded">
                   Cancel
                 </button>
               </div>
