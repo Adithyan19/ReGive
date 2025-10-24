@@ -1,4 +1,3 @@
-// src/components/ProductCarousel.jsx
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -70,7 +69,6 @@ export default function ProductCarousel({ products = [] }) {
     <section className="relative py-10 group">
       <h2 className="text-2xl font-semibold mb-6 text-center">Recently Donated Products</h2>
 
-      {/* Embla viewport */}
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex gap-4 md:gap-6">
           {products.map((product, idx) => (
