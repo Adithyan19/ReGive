@@ -11,7 +11,8 @@ import Catalog from './pages/Catalog.jsx';
 import Admin from './pages/Admin.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProductDetail from './pages/product/ProductDetail.jsx';
-
+import Products from './pages/product/Products.jsx';
+import SearchResults from './pages/product/SearchResults.jsx';
 
 function AppRoutes() {
   return (
@@ -21,7 +22,8 @@ function AppRoutes() {
       <Route path="/initial-setup" element={<InitialSetup />} />
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/product/:id" element={<ProductDetail />} />
-
+      <Route path="/products/:categoryId" element={<Products />} />
+      <Route path="/products-search" element={<SearchResults />} />
 
       <Route
         path="/category"

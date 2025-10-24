@@ -1,6 +1,6 @@
 // components/Header.jsx
 import { useAuth } from '../../hooks/useAuth.jsx';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import 'flowbite';
 import headerimg from '../../assets/logo_off.png';
@@ -11,6 +11,9 @@ function Header() {
   const { user, loading, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchLoading, setSearchLoading] = useState(false);
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     if (window.initFlowbite) {
@@ -38,12 +41,45 @@ function Header() {
     }
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    if (!searchQuery.trim()) {
+      return;
+    }
+
+    try {
+      setSearchLoading(true);
+      const res = await fetch(
+        `${BACKEND_URL}/api/catalog/search?q=${encodeURIComponent(searchQuery)}`
+      );
+
+      if (!res.ok) throw new Error('Search failed');
+
+      const data = await res.json();
+
+      navigate('/products-search', {
+        state: {
+          results: data.results,
+          query: searchQuery,
+          type: data.type,
+        },
+      });
+
+      setSearchQuery('');
+    } catch (err) {
+      console.error('Search error:', err);
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
   return (
     <nav className="bg-secondary text-foreground shadow-md fixed top-0 left-0 right-0 z-40">
       <div className="w-full p-4 relative">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-<img src={headerimg} style={{ height: "75px", width: "auto" }} alt="ReGive Logo" />
+            <img src={headerimg} style={{ height: '65px', width: 'auto' }} alt="ReGive Logo" />
           </Link>
 
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
@@ -94,8 +130,7 @@ function Header() {
               data-collapse-toggle="navbar-search"
               aria-controls="navbar-search"
               aria-expanded="false"
-              className="md:hidden text-foreground hover:bg-[#cbbba2] focus:outline-none focus:ring-4
-               focus:ring-primary rounded-lg text-sm p-2.5"
+              className="md:hidden text-foreground hover:bg-[#cbbba2] focus:outline-none focus:ring-4 focus:ring-primary rounded-lg text-sm p-2.5"
             >
               <svg
                 className="w-5 h-5"
@@ -116,29 +151,32 @@ function Header() {
             </button>
 
             <div className="relative hidden md:block">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-foreground/60"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                id="search-navbar"
-                className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-2xl
-                 bg-[#f1f0e5] focus:ring-primary focus:border-primary"
-                placeholder="Search..."
-              />
+              <form onSubmit={handleSearch} className="flex">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-foreground/60"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-2xl bg-[#f1f0e5] focus:ring-primary focus:border-primary"
+                  placeholder="Search "
+                />
+              </form>
             </div>
 
             {loading ? (
@@ -209,8 +247,7 @@ function Header() {
             <button
               data-collapse-toggle="navbar-menu"
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-foreground rounded-lg md:hidden
-               hover:bg-[#cbbba2] focus:outline-none focus:ring-2 focus:ring-primary"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-foreground rounded-lg md:hidden hover:bg-[#cbbba2] focus:outline-none focus:ring-2 focus:ring-primary"
               aria-controls="navbar-menu"
               aria-expanded="false"
             >
@@ -234,6 +271,7 @@ function Header() {
         </div>
       </div>
 
+      {/* Mobile menu */}
       <div className="hidden w-full md:hidden" id="navbar-menu">
         <ul className="flex flex-col p-4 font-medium border-t border-foreground/10 bg-secondary">
           <li>
@@ -254,7 +292,7 @@ function Header() {
               to="/donation"
               onClick={handleDonationClick}
               className={`block py-2 px-3 rounded transition ${
-                location.pathname.startsWith('/donation')
+                location.pathname.startsWith('/category' || '/donate')
                   ? 'text-primary font-semibold bg-sidebar'
                   : 'text-foreground hover:bg-[#cbbba2]'
               }`}
@@ -278,9 +316,10 @@ function Header() {
         </ul>
       </div>
 
+      {/* Mobile search */}
       <div className="hidden w-full md:hidden" id="navbar-search">
         <div className="p-4 border-t border-foreground/10 bg-secondary">
-          <div className="relative">
+          <form onSubmit={handleSearch} className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
                 className="w-4 h-4 text-foreground/60"
@@ -300,11 +339,12 @@ function Header() {
             </div>
             <input
               type="text"
-              className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg bg-[#f1f0e5]
-               focus:ring-primary focus:border-primary"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full p-2 ps-10 text-sm text-foreground border border-foreground/20 rounded-lg bg-[#f1f0e5] focus:ring-primary focus:border-primary"
               placeholder="Search..."
             />
-          </div>
+          </form>
         </div>
       </div>
     </nav>
