@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 export default function ProductDetail() {
   const { state } = useLocation();
   const { id } = useParams();
@@ -14,7 +16,7 @@ export default function ProductDetail() {
     if (!product) {
       const fetchProduct = async () => {
         try {
-          const res = await fetch(`http://localhost:5000/api/items/${id}`);
+          const res = await fetch(`${BACKEND_URL}/api/items/${id}`);
           if (!res.ok) throw new Error('Failed to load product');
           const data = await res.json();
           setProduct(data);
@@ -32,7 +34,7 @@ export default function ProductDetail() {
 
   const handleReport = async (itemId, userId) => {
   try {
-    const res = await fetch("http://localhost:5000/api/reports", {
+    const res = await fetch(`${BACKEND_URL}/api/reports`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ itemId, userId }),
@@ -47,7 +49,7 @@ export default function ProductDetail() {
 
 const handleConfirmOrder = async (itemId) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/item/${itemId}/claim`, {
+    const res = await fetch(`${BACKEND_URL}/api/item/${itemId}/claim`, {
       method: "PUT",
     });
     if (!res.ok) throw new Error("Failed to claim item");

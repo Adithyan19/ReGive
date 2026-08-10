@@ -6,6 +6,8 @@ import HeroSection from '../components/HeroSection.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import Footer from '../components/common/Footer.jsx';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 export default function Layout() {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
@@ -17,7 +19,7 @@ export default function Layout() {
     const fetchProducts = async () => {
       try {
         setLoadingProducts(true);
-        const res = await fetch('http://localhost:5000/api/frequent/latest', {
+        const res = await fetch(`${BACKEND_URL}/api/frequent/latest`, {
           credentials: 'include',
         });
         if (!res.ok) throw new Error('Failed to fetch items');
@@ -37,7 +39,7 @@ export default function Layout() {
     const fetchLeaderboard = async () => {
       try {
         setLoadingLeaderboard(true);
-        const res = await fetch('http://localhost:5000/api/leaderboard', {
+        const res = await fetch(`${BACKEND_URL}/api/leaderboard`, {
           credentials: 'include',
         });
         if (!res.ok) throw new Error('Failed to fetch leaderboard');
